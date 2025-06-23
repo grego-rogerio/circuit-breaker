@@ -3,24 +3,28 @@ package com.circuit.breaker.service;
 import com.circuit.breaker.domain.Publication;
 import com.circuit.breaker.mapper.PublicationMapper;
 import com.circuit.breaker.repository.PublicationRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
 @Service
 public class PublicationService {
 
-    @Autowired
-    private PublicationRepository publicationRepository;
+    private final PublicationRepository publicationRepository;
+
+    private final PublicationMapper publicationMapper;
+
+    private final CommentService commentService;
 
     @Autowired
-    private PublicationMapper publicationMapper;
-
-    @Autowired
-    private CommentService commentService;
+    public PublicationService(final PublicationRepository publicationRepository,
+                              final PublicationMapper publicationMapper,
+                              final CommentService commentService) {
+        this.publicationRepository = publicationRepository;
+        this.publicationMapper = publicationMapper;
+        this.commentService = commentService;
+    }
 
     public void insert(Publication publication) {
         var publicationEntity = publicationMapper.toPublicationEntity(publication);

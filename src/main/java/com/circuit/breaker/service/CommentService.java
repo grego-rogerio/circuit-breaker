@@ -3,13 +3,11 @@ package com.circuit.breaker.service;
 import com.circuit.breaker.client.CommentClient;
 import com.circuit.breaker.domain.Comment;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
 @Service
 public class CommentService {
 
@@ -27,8 +25,7 @@ public class CommentService {
     }
 
     private List<Comment> getCommentsFallback(String id, Throwable cause) {
-        log.warn("[WARN] fallback with id {}", id);
-        return redisService.findById(id);
+       return redisService.findById(id);
     }
 
 }
